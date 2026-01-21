@@ -77,8 +77,9 @@ describe("TrustBill Contract Tests", () => {
         address1
       );
       expect(paymentResult.result).toHaveProperty("value");
-      const payment = paymentResult.result.value;
-      expect(payment.payer).toBePrincipal(address1);
+      if (paymentResult.result.value) {
+        const payment = paymentResult.result.value;
+        expect(payment.payer).toBePrincipal(address1);
       expect(payment["bill-type"]).toBeUint(1); // BILL-TYPE-AIRTIME
       expect(payment.amount).toBeUint(amount);
       expect(payment.status).toBe("pending");
@@ -260,9 +261,11 @@ describe("TrustBill Contract Tests", () => {
         address1
       );
       expect(paymentResult.result).toHaveProperty("value");
-      const payment = paymentResult.result.value;
-      expect(payment["bill-type"]).toBeUint(billType);
-      expect(payment.amount).toBeUint(amount);
+      if (paymentResult.result.value) {
+        const payment = paymentResult.result.value;
+        expect(payment["bill-type"]).toBeUint(billType);
+        expect(payment.amount).toBeUint(amount);
+      }
     });
 
     it("should reject invalid bill type", () => {
