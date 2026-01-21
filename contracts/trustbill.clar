@@ -126,7 +126,6 @@
   (let
     (
       (payment (map-get? bill-payments { id: payment-id }))
-      (fee-percentage (var-get service-fee-percentage))
     )
     (begin
       (asserts! (is-some payment) (err ERR-BILL-NOT-FOUND))
