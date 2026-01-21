@@ -222,7 +222,7 @@ describe("TrustBill Contract Tests", () => {
         [paymentId],
         address1
       );
-      expect(process1.result).toBeOk();
+      expect(process1.result).toHaveProperty("value");
 
       // Try to process again
       const process2 = simnet.callPublicFn(
