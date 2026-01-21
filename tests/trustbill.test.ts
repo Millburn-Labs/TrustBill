@@ -358,7 +358,7 @@ describe("TrustBill Contract Tests", () => {
         [standardPrincipalCV(address2), uintCV(billType)],
         deployer
       );
-      expect(checkResult.result).toBe(true);
+      expect(checkResult.result).toBeTruthy();
     });
 
     it("should allow admin to change admin", () => {
