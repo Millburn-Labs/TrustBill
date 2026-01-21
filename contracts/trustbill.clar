@@ -21,10 +21,12 @@
 (define-constant ERR-PAYMENT-FAILED u6)
 
 ;; bill types
+;; These constants define the valid bill type values used in create-bill-payment
+;; BILL-TYPE-UTILITY and BILL-TYPE-OTHER are valid but passed as parameters (u3, u4)
 (define-constant BILL-TYPE-AIRTIME u1)
 (define-constant BILL-TYPE-DATA u2)
-(define-constant BILL-TYPE-UTILITY u3)
-(define-constant BILL-TYPE-OTHER u4)
+(define-constant BILL-TYPE-UTILITY u3) ;; Used as parameter value u3 in create-bill-payment
+(define-constant BILL-TYPE-OTHER u4) ;; Used as parameter value u4 in create-bill-payment
 
 ;; data vars
 ;; Admin will be set by deployer. Using deployer address as default - must be set on first deploy.
