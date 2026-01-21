@@ -183,12 +183,13 @@ describe("TrustBill Contract Tests", () => {
       );
       expect(createResult.result).toHaveProperty("value");
       const paymentId = createResult.result.value;
+      const paymentIdNum = typeof paymentId === 'object' && paymentId.value ? paymentId.value : paymentId;
 
       // Try to process with different address
       const processResult = simnet.callPublicFn(
         contractName,
         "process-payment",
-        [uintCV(paymentId)],
+        [uintCV(paymentIdNum)],
         address2
       );
       expect(processResult.result).toBeErr(1); // ERR-UNAUTHORIZED
