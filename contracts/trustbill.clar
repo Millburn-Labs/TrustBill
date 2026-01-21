@@ -17,9 +17,7 @@
 ;; constants
 (define-constant ERR-UNAUTHORIZED u1)
 (define-constant ERR-INVALID-AMOUNT u2)
-(define-constant ERR-INSUFFICIENT-BALANCE u3)
 (define-constant ERR-BILL-NOT-FOUND u4)
-(define-constant ERR-INVALID-RECIPIENT u5)
 (define-constant ERR-PAYMENT-FAILED u6)
 
 ;; bill types
@@ -144,27 +142,20 @@
             tx-sender
             (var-get admin)
           ))
-          ;; Calculate and track service fee (for accounting purposes)
-          (let
-            (
-            (service-fee (/ (* (get amount bill-data) fee-percentage) u100))
+          ;; Update payment status to completed
+          (map-set bill-payments
+            { id: payment-id }
+            {
+              payer: (get payer bill-data),
+              bill-type: (get bill-type bill-data),
+              amount: (get amount bill-data),
+              recipient: (get recipient bill-data),
+              phone-number: (get phone-number bill-data),
+              timestamp: (get timestamp bill-data),
+              status: "completed"
+            }
           )
-          (begin
-            (map-set bill-payments
-              { id: payment-id }
-              {
-                payer: (get payer bill-data),
-                bill-type: (get bill-type bill-data),
-                amount: (get amount bill-data),
-                recipient: (get recipient bill-data),
-                phone-number: (get phone-number bill-data),
-                timestamp: (get timestamp bill-data),
-                status: "completed"
-              }
-            )
-              (ok true)
-            )
-          )
+          (ok true)
         )
       )
     )
