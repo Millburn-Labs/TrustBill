@@ -95,7 +95,8 @@ describe("TrustBill Contract Tests", () => {
         address1
       );
 
-      expect(result.result).toHaveProperty("value", 2);
+      expect(result.result.type).toBe("err");
+      expect(result.result.value.value).toBe(2n);
     });
   });
 
@@ -317,7 +318,8 @@ describe("TrustBill Contract Tests", () => {
         [newFee],
         address1
       );
-      expect(result.result).toHaveProperty("value", 1);
+      expect(result.result.type).toBe("err");
+      expect(result.result.value.value).toBe(1n);
     });
 
     it("should reject service fee over 100%", () => {
@@ -329,7 +331,8 @@ describe("TrustBill Contract Tests", () => {
         [uintCV(newFee)],
         deployer
       );
-      expect(result.result).toHaveProperty("value", 2);
+      expect(result.result.type).toBe("err");
+      expect(result.result.value.value).toBe(2n);
     });
 
     it("should allow admin to register provider", () => {
@@ -379,7 +382,8 @@ describe("TrustBill Contract Tests", () => {
         [standardPrincipalCV(address2)],
         address1
       );
-      expect(result.result).toHaveProperty("value", 1);
+      expect(result.result.type).toBe("err");
+      expect(result.result.value.value).toBe(1n);
     });
   });
 
