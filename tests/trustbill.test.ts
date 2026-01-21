@@ -73,7 +73,7 @@ describe("TrustBill Contract Tests", () => {
       const paymentResult = simnet.callReadOnlyFn(
         contractName,
         "get-payment",
-        [1],
+        [uintCV(1)],
         address1
       );
       expect(paymentResult.result).toHaveProperty("value");
@@ -111,7 +111,7 @@ describe("TrustBill Contract Tests", () => {
         address2
       );
 
-      expect(result.result).toBeOk();
+      expect(result.result).toHaveProperty("value");
       expect(result.result.value).toBeUint(1);
 
       // Verify payment details
@@ -139,20 +139,20 @@ describe("TrustBill Contract Tests", () => {
       const createResult = simnet.callPublicFn(
         contractName,
         "pay-airtime",
-        [recipient, amount],
+        [stringAsciiCV(recipient), uintCV(amount)],
         address1
       );
-      expect(createResult.result).toBeOk();
+      expect(createResult.result).toHaveProperty("value");
       const paymentId = createResult.result.value;
 
       // Process the payment
       const processResult = simnet.callPublicFn(
         contractName,
         "process-payment",
-        [paymentId],
+        [uintCV(paymentId)],
         address1
       );
-      expect(processResult.result).toBeOk();
+      expect(processResult.result).toHaveProperty("value");
 
       // Verify payment status changed to completed
       const paymentResult = simnet.callReadOnlyFn(
@@ -246,14 +246,14 @@ describe("TrustBill Contract Tests", () => {
         address1
       );
 
-      expect(result.result).toBeOk();
+      expect(result.result).toHaveProperty("value");
       expect(result.result.value).toBeUint(1);
 
       // Verify payment details
       const paymentResult = simnet.callReadOnlyFn(
         contractName,
         "get-payment",
-        [1],
+        [uintCV(1)],
         address1
       );
       expect(paymentResult.result).toHaveProperty("value");
@@ -341,7 +341,7 @@ describe("TrustBill Contract Tests", () => {
         [standardPrincipalCV(address2), uintCV(billType)],
         deployer
       );
-      expect(result.result).toBeOk();
+      expect(result.result).toHaveProperty("value");
 
       // Verify provider is registered
       const checkResult = simnet.callReadOnlyFn(
