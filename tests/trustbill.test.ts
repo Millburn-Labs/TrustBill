@@ -146,12 +146,14 @@ describe("TrustBill Contract Tests", () => {
       );
       expect(createResult.result).toHaveProperty("value");
       const paymentId = createResult.result.value;
+      // paymentId is already a ClarityValue, extract the numeric value
+      const paymentIdNum = typeof paymentId === 'object' && paymentId.value ? paymentId.value : paymentId;
 
       // Process the payment
       const processResult = simnet.callPublicFn(
         contractName,
         "process-payment",
-        [uintCV(paymentId)],
+        [uintCV(paymentIdNum)],
         address1
       );
       expect(processResult.result).toHaveProperty("value");
