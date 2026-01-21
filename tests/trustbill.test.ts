@@ -410,7 +410,7 @@ describe("TrustBill Contract Tests", () => {
         [stringAsciiCV(recipient), uintCV(2000000)],
         address1
       );
-      expect(result2.result).toBeOk();
+      expect(result2.result).toHaveProperty("value");
       expect(result2.result.value).toBeUint(2);
 
       // Create third payment
@@ -420,7 +420,7 @@ describe("TrustBill Contract Tests", () => {
         [uintCV(4), stringAsciiCV("test-recipient"), uintCV(3000000)],
         address1
       );
-      expect(result3.result).toBeOk();
+      expect(result3.result).toHaveProperty("value");
       expect(result3.result.value).toBeUint(3);
 
       // Verify payment counter
