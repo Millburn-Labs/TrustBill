@@ -352,7 +352,7 @@ describe("TrustBill Contract Tests", () => {
       const checkResult = simnet.callReadOnlyFn(
         contractName,
         "is-provider-registered",
-        [address2, billType],
+        [standardPrincipalCV(address2), uintCV(billType)],
         deployer
       );
       expect(checkResult.result).toBe(true);
@@ -400,7 +400,7 @@ describe("TrustBill Contract Tests", () => {
         [stringAsciiCV(recipient), uintCV(1000000)],
         address1
       );
-      expect(result1.result).toBeOk();
+      expect(result1.result).toHaveProperty("value");
       expect(result1.result.value).toBeUint(1);
 
       // Create second payment
