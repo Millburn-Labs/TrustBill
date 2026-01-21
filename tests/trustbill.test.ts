@@ -178,7 +178,7 @@ describe("TrustBill Contract Tests", () => {
         [stringAsciiCV(recipient), uintCV(amount)],
         address1
       );
-      expect(createResult.result).toBeOk();
+      expect(createResult.result).toHaveProperty("value");
       const paymentId = createResult.result.value;
 
       // Try to process with different address
