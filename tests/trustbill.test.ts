@@ -198,7 +198,8 @@ describe("TrustBill Contract Tests", () => {
         [uintCV(999)],
         address1
       );
-      expect(result.result).toHaveProperty("value", 4);
+      expect(result.result.type).toBe("err");
+      expect(result.result.value.value).toBe(4n);
     });
 
     it("should reject processing already completed payment", () => {
@@ -230,7 +231,8 @@ describe("TrustBill Contract Tests", () => {
         [paymentId],
         address1
       );
-      expect(process2.result).toBeErr(6); // ERR-PAYMENT-FAILED (status not pending)
+      expect(process2.result.type).toBe("err");
+      expect(process2.result.value.value).toBe(6n); // ERR-PAYMENT-FAILED (status not pending)
     });
   });
 
