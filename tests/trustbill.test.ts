@@ -76,7 +76,7 @@ describe("TrustBill Contract Tests", () => {
         [1],
         address1
       );
-      expect(paymentResult.result).toBeSome();
+      expect(paymentResult.result).toHaveProperty("value");
       const payment = paymentResult.result.value;
       expect(payment.payer).toBePrincipal(address1);
       expect(payment["bill-type"]).toBeUint(1); // BILL-TYPE-AIRTIME
@@ -121,7 +121,7 @@ describe("TrustBill Contract Tests", () => {
         [1],
         address2
       );
-      expect(paymentResult.result).toBeSome();
+      expect(paymentResult.result).toHaveProperty("value");
       const payment = paymentResult.result.value;
       expect(payment.payer).toBePrincipal(address2);
       expect(payment["bill-type"]).toBeUint(2); // BILL-TYPE-DATA
@@ -161,7 +161,7 @@ describe("TrustBill Contract Tests", () => {
         [paymentId],
         address1
       );
-      expect(paymentResult.result).toBeSome();
+      expect(paymentResult.result).toHaveProperty("value");
       const payment = paymentResult.result.value;
       expect(payment.status).toBe("completed");
     });
@@ -256,7 +256,7 @@ describe("TrustBill Contract Tests", () => {
         [1],
         address1
       );
-      expect(paymentResult.result).toBeSome();
+      expect(paymentResult.result).toHaveProperty("value");
       const payment = paymentResult.result.value;
       expect(payment["bill-type"]).toBeUint(billType);
       expect(payment.amount).toBeUint(amount);
@@ -296,7 +296,7 @@ describe("TrustBill Contract Tests", () => {
         [uintCV(newFee)],
         deployer
       );
-      expect(result.result).toBeOk();
+      expect(result.result).toHaveProperty("value");
 
       // Verify fee was updated
       const feeResult = simnet.callReadOnlyFn(
@@ -360,7 +360,7 @@ describe("TrustBill Contract Tests", () => {
         [standardPrincipalCV(address1)],
         deployer
       );
-      expect(result.result).toBeOk();
+      expect(result.result).toHaveProperty("value");
 
       // Verify admin changed
       const adminResult = simnet.callReadOnlyFn(
