@@ -156,4 +156,3 @@ clarinet deploy --mainnet
 ISC
 
 ## Author
-
