@@ -152,5 +152,3 @@ clarinet deploy --mainnet
 - All payment amounts must be greater than 0
 
 ## License
-
-ISC
