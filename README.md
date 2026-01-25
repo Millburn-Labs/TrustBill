@@ -157,4 +157,3 @@ ISC
 
 ## Author
 
-TrustBill Platform
