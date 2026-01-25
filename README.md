@@ -154,5 +154,3 @@ clarinet deploy --mainnet
 ## License
 
 ISC
-
-## Author
