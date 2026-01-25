@@ -150,5 +150,3 @@ clarinet deploy --mainnet
 - Admin functions are restricted to the contract admin
 - Service fee is configurable but limited to a maximum of 100%
 - All payment amounts must be greater than 0
-
-## License
