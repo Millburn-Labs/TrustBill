@@ -93,12 +93,12 @@ export async function exampleCreateMultipleBills() {
 
   // Create airtime payment
   await client.payAirtime('08012345678', 1000000, {
-    onFinish: (data) => console.log('Airtime payment created:', data),
+    onFinish: (data: FinishedTxData) => console.log('Airtime payment created:', data),
   });
 
   // Create data subscription payment
   await client.payDataSubscription('08012345678', 2000000, {
-    onFinish: (data) => console.log('Data subscription payment created:', data),
+    onFinish: (data: FinishedTxData) => console.log('Data subscription payment created:', data),
   });
 
   // Create utility payment
@@ -107,7 +107,7 @@ export async function exampleCreateMultipleBills() {
     'utility-account-123',
     5000000,
     {
-      onFinish: (data) => console.log('Utility payment created:', data),
+      onFinish: (data: FinishedTxData) => console.log('Utility payment created:', data),
     }
   );
 }
@@ -124,7 +124,7 @@ export async function exampleAdminFunctions() {
 
   // Update service fee (admin only)
   await client.setServiceFee(10, {
-    onFinish: (data) => {
+    onFinish: (_data: FinishedTxData) => {
       console.log('Service fee updated to 10%');
     },
   });
@@ -134,7 +134,7 @@ export async function exampleAdminFunctions() {
     'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG',
     BillType.AIRTIME,
     {
-      onFinish: (data) => {
+      onFinish: (_data: FinishedTxData) => {
         console.log('Provider registered');
       },
     }
