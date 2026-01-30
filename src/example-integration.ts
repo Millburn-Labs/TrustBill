@@ -9,9 +9,10 @@ import { TrustBillClient, BillType } from './trustbill-client.js';
 import {
   showConnect,
   openContractCall,
+  FinishedTxData,
 } from '@stacks/connect';
-import { StacksTestnet, StacksMainnet } from '@stacks/network';
-import { stringAsciiCV, uintCV, standardPrincipalCV } from '@stacks/transactions';
+import { StacksTestnet } from '@stacks/network';
+import { stringAsciiCV, uintCV } from '@stacks/transactions';
 
 /**
  * Example: Connect wallet and create a payment
@@ -39,7 +40,7 @@ export async function exampleConnectAndPay() {
         '08012345678', // Recipient phone number
         1000000, // Amount in micro-STX (1 STX)
         {
-          onFinish: (data) => {
+          onFinish: (data: FinishedTxData) => {
             console.log('Payment created:', data);
             // Handle successful payment creation
           },
@@ -69,7 +70,7 @@ export async function exampleProcessPayment(paymentId: number) {
   await client.processPayment(
     paymentId,
     {
-      onFinish: (data) => {
+      onFinish: (data: FinishedTxData) => {
         console.log('Payment processed:', data);
         // Handle successful payment processing
       },
