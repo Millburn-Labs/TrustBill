@@ -11,7 +11,7 @@ import {
   openContractCall,
   FinishedTxData,
 } from '@stacks/connect';
-import { StacksTestnet } from '@stacks/network';
+import { StacksTestnet } from '@stacks/network-v6';
 import { stringAsciiCV, uintCV } from '@stacks/transactions';
 
 /**
@@ -168,7 +168,7 @@ export async function exampleDirectTransaction(
 
   // Sign and broadcast
   const broadcastResult = await client.broadcastTransaction(
-    transaction.serialize().toString('hex')
+    transaction.serialize()
   );
 
   console.log('Transaction broadcasted:', broadcastResult);
@@ -187,7 +187,7 @@ export async function exampleDirectContractCall() {
       stringAsciiCV('08012345678'),
       uintCV(1000000),
     ],
-    onFinish: (data) => {
+    onFinish: (data: FinishedTxData) => {
       console.log('Transaction submitted:', data);
     },
     onCancel: () => {

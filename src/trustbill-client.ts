@@ -19,11 +19,11 @@ import {
   openContractCall,
   ContractCallRegularOptions,
 } from '@stacks/connect';
+import type { StacksNetwork } from '@stacks/network';
 import {
-  StacksNetwork,
+  StacksNetwork as StacksNetworkV6,
   StacksTestnet,
-  StacksMainnet,
-} from '@stacks/network';
+} from '@stacks/network-v6';
 
 /**
  * Contract configuration
@@ -31,7 +31,7 @@ import {
 export interface TrustBillConfig {
   contractAddress: string;
   contractName: string;
-  network?: StacksNetwork;
+  network?: StacksNetwork | StacksNetworkV6;
 }
 
 /**
