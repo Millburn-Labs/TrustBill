@@ -78,6 +78,17 @@ TrustBill is a Clarity smart contract that enables users to:
 npm install
 ```
 
+### Integration Libraries
+
+This project uses:
+- **@stacks/connect**: For wallet connection and user authentication
+- **@stacks/transactions**: For building and broadcasting transactions
+- **@stacks/clarinet-sdk**: For testing Clarity contracts
+
+The integration utilities are located in the `src/` directory:
+- `src/trustbill-client.ts`: Main client class for contract interactions
+- `src/example-integration.ts`: Example usage patterns
+
 ### Testing
 
 Run the test suite:
@@ -92,27 +103,129 @@ npm run test:report
 
 ### Usage Examples
 
-#### Create an Airtime Payment
+#### Using TrustBill Client with @stacks/connect
+
+The project includes a `TrustBillClient` utility class that integrates `@stacks/connect` and `@stacks/transactions` for easy contract interactions.
 
 ```typescript
-const recipient = "08012345678";
-const amount = 1000000; // 1 STX in micro-STX
+import { TrustBillClient, BillType } from './src/trustbill-client.js';
+import { StacksTestnet } from '@stacks/network';
 
-const result = await contract.call("pay-airtime", [recipient, amount]);
+// Initialize the client
+const client = new TrustBillClient({
+  contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM', // Your contract address
+  contractName: 'trustbill',
+  network: new StacksTestnet(),
+});
+
+// Create an airtime payment
+await client.payAirtime(
+  '08012345678', // Recipient phone number
+  1000000, // Amount in micro-STX (1 STX)
+  {
+    onFinish: (data) => {
+      console.log('Payment created:', data);
+    },
+    onCancel: () => {
+      console.log('Payment cancelled');
+    },
+  }
+);
+
+// Process a payment
+await client.processPayment(1, {
+  onFinish: (data) => {
+    console.log('Payment processed:', data);
+  },
+});
+
+// Create a custom bill payment
+await client.createBillPayment(
+  BillType.UTILITY,
+  'utility-account-123',
+  5000000,
+  {
+    onFinish: (data) => console.log('Bill payment created:', data),
+  }
+);
 ```
 
-#### Process a Payment
+#### Direct Contract Calls with @stacks/connect
+
+You can also use `@stacks/connect` directly:
 
 ```typescript
-const paymentId = 1;
-const result = await contract.call("process-payment", [paymentId]);
+import { openContractCall } from '@stacks/connect';
+import { stringAsciiCV, uintCV } from '@stacks/transactions';
+import { StacksTestnet } from '@stacks/network';
+
+await openContractCall({
+  network: new StacksTestnet(),
+  contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+  contractName: 'trustbill',
+  functionName: 'pay-airtime',
+  functionArgs: [
+    stringAsciiCV('08012345678'),
+    uintCV(1000000),
+  ],
+  onFinish: (data) => {
+    console.log('Transaction submitted:', data);
+  },
+  onCancel: () => {
+    console.log('Transaction cancelled');
+  },
+});
+```
+
+#### Programmatic Transactions with @stacks/transactions
+
+For backend services or programmatic interactions without Connect UI:
+
+```typescript
+import { TrustBillClient } from './src/trustbill-client.js';
+import { StacksTestnet } from '@stacks/network';
+
+const client = new TrustBillClient({
+  contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+  contractName: 'trustbill',
+  network: new StacksTestnet(),
+});
+
+// Build and broadcast transaction
+const transaction = await client.buildContractCall(
+  'pay-airtime',
+  [stringAsciiCV('08012345678'), uintCV(1000000)],
+  senderPrivateKey
+);
+
+const result = await client.broadcastTransaction(
+  transaction.serialize().toString('hex')
+);
 ```
 
 #### Query Payment Details
 
+For read-only queries, you can use the Stacks API or a library like `@stacks/blockchain-api-client`:
+
 ```typescript
+// Example using fetch (replace with your preferred method)
+const contractId = 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.trustbill';
+const functionName = 'get-payment';
 const paymentId = 1;
-const payment = await contract.callReadOnly("get-payment", [paymentId]);
+
+const response = await fetch(
+  `https://api.testnet.hiro.so/v2/contracts/call-read/${contractId}/${functionName}`,
+  {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      sender: contractId,
+      arguments: [paymentId.toString()],
+    }),
+  }
+);
+
+const payment = await response.json();
 ```
 
 ## Contract Deployment
