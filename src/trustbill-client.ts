@@ -14,6 +14,7 @@ import {
   uintCV,
   standardPrincipalCV,
   ClarityValue,
+  StacksTransaction,
 } from '@stacks/transactions';
 import {
   openContractCall,
@@ -282,7 +283,10 @@ export class TrustBillClient {
   /**
    * Broadcast a signed transaction
    */
-  async broadcastTransaction(signedTx: string | Uint8Array) {
-    return await broadcastTransaction(signedTx, this.config.network!);
+  async broadcastTransaction(transaction: StacksTransaction) {
+    return await broadcastTransaction({
+      transaction,
+      network: this.config.network!,
+    });
   }
 }
