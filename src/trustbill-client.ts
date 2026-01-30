@@ -14,7 +14,7 @@ import {
   uintCV,
   standardPrincipalCV,
   ClarityValue,
-  StacksTransaction,
+  StacksTransactionWire,
 } from '@stacks/transactions';
 import {
   openContractCall,
@@ -270,7 +270,7 @@ export class TrustBillClient {
       functionName,
       functionArgs,
       senderKey,
-      network: this.config.network,
+      network: this.config.network as any,
       anchorMode: AnchorMode.Any,
       postConditionMode: PostConditionMode.Allow,
       fee: 1000, // Default fee, adjust as needed
@@ -283,10 +283,10 @@ export class TrustBillClient {
   /**
    * Broadcast a signed transaction
    */
-  async broadcastTransaction(transaction: StacksTransaction) {
+  async broadcastTransaction(transaction: StacksTransactionWire) {
     return await broadcastTransaction({
       transaction,
-      network: this.config.network!,
+      network: this.config.network as any,
     });
   }
 }
