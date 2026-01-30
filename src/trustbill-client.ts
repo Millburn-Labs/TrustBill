@@ -10,9 +10,6 @@ import {
   broadcastTransaction,
   makeContractCall,
   PostConditionMode,
-  StacksNetwork,
-  StacksTestnet,
-  StacksMainnet,
   stringAsciiCV,
   uintCV,
   standardPrincipalCV,
@@ -20,8 +17,13 @@ import {
 } from '@stacks/transactions';
 import {
   openContractCall,
-  ContractCallOptions,
+  ContractCallRegularOptions,
 } from '@stacks/connect';
+import {
+  StacksNetwork,
+  StacksTestnet,
+  StacksMainnet,
+} from '@stacks/network';
 
 /**
  * Contract configuration
@@ -92,7 +94,7 @@ export class TrustBillClient {
   async payAirtime(
     recipient: string,
     amount: number,
-    options: Omit<ContractCallOptions, 'contractAddress' | 'contractName' | 'functionName' | 'functionArgs'>
+    options: Omit<ContractCallRegularOptions, 'contractAddress' | 'contractName' | 'functionName' | 'functionArgs' | 'sponsored'>
   ): Promise<void> {
     const functionName = 'pay-airtime';
     const functionArgs = [
@@ -102,6 +104,7 @@ export class TrustBillClient {
 
     await openContractCall({
       ...options,
+      sponsored: false,
       network: this.config.network,
       contractAddress: this.config.contractAddress,
       contractName: this.config.contractName,
@@ -117,7 +120,7 @@ export class TrustBillClient {
   async payDataSubscription(
     recipient: string,
     amount: number,
-    options: Omit<ContractCallOptions, 'contractAddress' | 'contractName' | 'functionName' | 'functionArgs'>
+    options: Omit<ContractCallRegularOptions, 'contractAddress' | 'contractName' | 'functionName' | 'functionArgs' | 'sponsored'>
   ): Promise<void> {
     const functionName = 'pay-data-subscription';
     const functionArgs = [
@@ -127,6 +130,7 @@ export class TrustBillClient {
 
     await openContractCall({
       ...options,
+      sponsored: false,
       network: this.config.network,
       contractAddress: this.config.contractAddress,
       contractName: this.config.contractName,
@@ -143,7 +147,7 @@ export class TrustBillClient {
     billType: BillType,
     recipient: string,
     amount: number,
-    options: Omit<ContractCallOptions, 'contractAddress' | 'contractName' | 'functionName' | 'functionArgs'>
+    options: Omit<ContractCallRegularOptions, 'contractAddress' | 'contractName' | 'functionName' | 'functionArgs' | 'sponsored'>
   ): Promise<void> {
     const functionName = 'create-bill-payment';
     const functionArgs = [
@@ -154,6 +158,7 @@ export class TrustBillClient {
 
     await openContractCall({
       ...options,
+      sponsored: false,
       network: this.config.network,
       contractAddress: this.config.contractAddress,
       contractName: this.config.contractName,
@@ -168,13 +173,14 @@ export class TrustBillClient {
    */
   async processPayment(
     paymentId: number,
-    options: Omit<ContractCallOptions, 'contractAddress' | 'contractName' | 'functionName' | 'functionArgs'>
+    options: Omit<ContractCallRegularOptions, 'contractAddress' | 'contractName' | 'functionName' | 'functionArgs' | 'sponsored'>
   ): Promise<void> {
     const functionName = 'process-payment';
     const functionArgs = [uintCV(paymentId)];
 
     await openContractCall({
       ...options,
+      sponsored: false,
       network: this.config.network,
       contractAddress: this.config.contractAddress,
       contractName: this.config.contractName,
@@ -189,13 +195,14 @@ export class TrustBillClient {
    */
   async setServiceFee(
     newFee: number,
-    options: Omit<ContractCallOptions, 'contractAddress' | 'contractName' | 'functionName' | 'functionArgs'>
+    options: Omit<ContractCallRegularOptions, 'contractAddress' | 'contractName' | 'functionName' | 'functionArgs' | 'sponsored'>
   ): Promise<void> {
     const functionName = 'set-service-fee';
     const functionArgs = [uintCV(newFee)];
 
     await openContractCall({
       ...options,
+      sponsored: false,
       network: this.config.network,
       contractAddress: this.config.contractAddress,
       contractName: this.config.contractName,
@@ -211,7 +218,7 @@ export class TrustBillClient {
   async registerProvider(
     provider: string,
     billType: BillType,
-    options: Omit<ContractCallOptions, 'contractAddress' | 'contractName' | 'functionName' | 'functionArgs'>
+    options: Omit<ContractCallRegularOptions, 'contractAddress' | 'contractName' | 'functionName' | 'functionArgs' | 'sponsored'>
   ): Promise<void> {
     const functionName = 'register-provider';
     const functionArgs = [
@@ -221,6 +228,7 @@ export class TrustBillClient {
 
     await openContractCall({
       ...options,
+      sponsored: false,
       network: this.config.network,
       contractAddress: this.config.contractAddress,
       contractName: this.config.contractName,
