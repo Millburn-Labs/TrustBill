@@ -81,12 +81,6 @@ export class TrustBillClient {
     this.config = { ...DEFAULT_CONFIG, ...config };
   }
 
-  /**
-   * Get the contract identifier
-   */
-  private getContractIdentifier(): string {
-    return `${this.config.contractAddress}.${this.config.contractName}`;
-  }
 
   /**
    * Create an airtime payment using Connect
@@ -243,13 +237,14 @@ export class TrustBillClient {
    */
   async setAdmin(
     newAdmin: string,
-    options: Omit<ContractCallOptions, 'contractAddress' | 'contractName' | 'functionName' | 'functionArgs'>
+    options: Omit<ContractCallRegularOptions, 'contractAddress' | 'contractName' | 'functionName' | 'functionArgs' | 'sponsored'>
   ): Promise<void> {
     const functionName = 'set-admin';
     const functionArgs = [standardPrincipalCV(newAdmin)];
 
     await openContractCall({
       ...options,
+      sponsored: false,
       network: this.config.network,
       contractAddress: this.config.contractAddress,
       contractName: this.config.contractName,
@@ -287,7 +282,7 @@ export class TrustBillClient {
   /**
    * Broadcast a signed transaction
    */
-  async broadcastTransaction(signedTx: string) {
+  async broadcastTransaction(signedTx: string | Uint8Array) {
     return await broadcastTransaction(signedTx, this.config.network!);
   }
 }
