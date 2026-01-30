@@ -166,10 +166,8 @@ export async function exampleDirectTransaction(
     senderKey
   );
 
-  // Sign and broadcast
-  const broadcastResult = await client.broadcastTransaction(
-    transaction.serialize()
-  );
+  // Sign and broadcast (transaction is already a StacksTransaction object)
+  const broadcastResult = await client.broadcastTransaction(transaction);
 
   console.log('Transaction broadcasted:', broadcastResult);
 }
