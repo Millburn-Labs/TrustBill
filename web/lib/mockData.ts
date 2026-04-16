@@ -1,0 +1,197 @@
+import type { Transaction, SavedBeneficiary, BillCategoryMeta } from "@/types";
+
+export const BILL_CATEGORIES: BillCategoryMeta[] = [
+  {
+    id: "airtime",
+    label: "Airtime",
+    description: "Top up any network instantly",
+    icon: "📱",
+    color: "#00D4AA",
+  },
+  {
+    id: "data",
+    label: "Data Bundles",
+    description: "Buy data subscriptions with STX",
+    icon: "🌐",
+    color: "#7C3AED",
+  },
+  {
+    id: "electricity",
+    label: "Electricity",
+    description: "Pay utility bills on-chain",
+    icon: "💡",
+    color: "#F59E0B",
+  },
+  {
+    id: "tv",
+    label: "TV Subscriptions",
+    description: "DSTV, cable, streaming services",
+    icon: "📺",
+    color: "#EF4444",
+  },
+  {
+    id: "water",
+    label: "Water Bills",
+    description: "Municipal utility payments",
+    icon: "💧",
+    color: "#3B82F6",
+  },
+  {
+    id: "rent",
+    label: "Rent",
+    description: "Trustless rent payments with receipts",
+    icon: "🏠",
+    color: "#10B981",
+  },
+  {
+    id: "internet",
+    label: "Internet",
+    description: "Broadband and fiber subscriptions",
+    icon: "📶",
+    color: "#8B5CF6",
+  },
+  {
+    id: "healthcare",
+    label: "Healthcare",
+    description: "Medical bill settlements",
+    icon: "🏥",
+    color: "#EC4899",
+  },
+];
+
+export const MOCK_TRANSACTIONS: Transaction[] = [
+  {
+    id: "tx-001",
+    date: "2026-04-15T09:23:00Z",
+    category: "airtime",
+    service: "MTN Airtime",
+    recipient: "+234 802 345 6789",
+    amountSTX: 12.5,
+    amountUSD: 7.75,
+    status: "confirmed",
+    txHash: "0x8f3a2b1c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a",
+  },
+  {
+    id: "tx-002",
+    date: "2026-04-14T14:10:00Z",
+    category: "electricity",
+    service: "NEPA / PHCN",
+    recipient: "45028712938",
+    amountSTX: 80.0,
+    amountUSD: 49.6,
+    status: "confirmed",
+    txHash: "0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b",
+  },
+  {
+    id: "tx-003",
+    date: "2026-04-13T11:45:00Z",
+    category: "data",
+    service: "Airtel Data Bundle",
+    recipient: "+234 901 234 5678",
+    amountSTX: 25.0,
+    amountUSD: 15.5,
+    status: "confirmed",
+    txHash: "0x2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c",
+  },
+  {
+    id: "tx-004",
+    date: "2026-04-12T08:30:00Z",
+    category: "tv",
+    service: "DSTV Compact",
+    recipient: "1234567890",
+    amountSTX: 45.0,
+    amountUSD: 27.9,
+    status: "pending",
+    txHash: "0x3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d",
+  },
+  {
+    id: "tx-005",
+    date: "2026-04-10T16:20:00Z",
+    category: "internet",
+    service: "Spectranet Fiber",
+    recipient: "ACC-789456123",
+    amountSTX: 60.0,
+    amountUSD: 37.2,
+    status: "confirmed",
+    txHash: "0x4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e",
+  },
+  {
+    id: "tx-006",
+    date: "2026-04-08T10:05:00Z",
+    category: "water",
+    service: "Lagos Water Corp",
+    recipient: "WB-00192837",
+    amountSTX: 30.0,
+    amountUSD: 18.6,
+    status: "failed",
+    txHash: "0x5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f",
+  },
+  {
+    id: "tx-007",
+    date: "2026-04-07T13:15:00Z",
+    category: "airtime",
+    service: "Glo Airtime",
+    recipient: "+234 805 678 9012",
+    amountSTX: 8.0,
+    amountUSD: 4.96,
+    status: "confirmed",
+    txHash: "0x6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f50",
+  },
+  {
+    id: "tx-008",
+    date: "2026-04-05T09:00:00Z",
+    category: "healthcare",
+    service: "St. Nicholas Hospital",
+    recipient: "PAT-20264512",
+    amountSTX: 200.0,
+    amountUSD: 124.0,
+    status: "confirmed",
+    txHash: "0x7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5061",
+  },
+];
+
+export const MOCK_BENEFICIARIES: SavedBeneficiary[] = [
+  {
+    id: "ben-001",
+    name: "Mom's MTN",
+    category: "airtime",
+    recipient: "+234 802 345 6789",
+    network: "MTN",
+  },
+  {
+    id: "ben-002",
+    name: "Home Meter",
+    category: "electricity",
+    recipient: "45028712938",
+  },
+  {
+    id: "ben-003",
+    name: "DSTV Compact",
+    category: "tv",
+    recipient: "1234567890",
+  },
+];
+
+export const SPENDING_CHART_DATA = [
+  { date: "Mar 16", airtime: 8, electricity: 0, data: 15, other: 0 },
+  { date: "Mar 19", airtime: 12, electricity: 80, data: 0, other: 30 },
+  { date: "Mar 22", airtime: 0, electricity: 0, data: 25, other: 45 },
+  { date: "Mar 25", airtime: 8, electricity: 0, data: 0, other: 60 },
+  { date: "Mar 28", airtime: 12, electricity: 80, data: 25, other: 0 },
+  { date: "Mar 31", airtime: 0, electricity: 0, data: 0, other: 200 },
+  { date: "Apr 03", airtime: 8, electricity: 0, data: 0, other: 30 },
+  { date: "Apr 06", airtime: 0, electricity: 0, data: 25, other: 0 },
+  { date: "Apr 09", airtime: 12, electricity: 80, data: 0, other: 0 },
+  { date: "Apr 12", airtime: 0, electricity: 0, data: 25, other: 45 },
+  { date: "Apr 15", airtime: 12, electricity: 0, data: 0, other: 60 },
+];
+
+export const PROTOCOL_STATS = {
+  totalBillsPaid: 148320,
+  totalSTXProcessed: 4280000,
+  activeWallets: 12540,
+  countriesSupported: 24,
+};
+
+export const CONTRACT_ADDRESS =
+  "SP2X0TZ59D5SZ8ACQ6YMCHHNR2ZN51Z32E2CJ173.trustbill-v1";
